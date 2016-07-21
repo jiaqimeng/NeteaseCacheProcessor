@@ -2,7 +2,7 @@
 
 Extracting songs from local netease music cache.
 
-Please make sure that you have netease music app installed!
+Please make sure that you have a reliable internete connection and the netease music app installed!
 
 Guide:
   1. Download the executable file
