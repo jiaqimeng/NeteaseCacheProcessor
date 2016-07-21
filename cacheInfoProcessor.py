@@ -30,7 +30,7 @@ if not os.path.exists(toPath):
     open(toPath+".HISTORY", 'a').close()
 
 HISTORY = open(toPath + ".HISTORY", 'a')
-HISTORYREAD = open(toPath + ".HISTORY", 'r')
+HISTORYREAD = open(toPath + ".HISTORY")
 
 def processCachedSongs():
 	counter = 0
@@ -39,15 +39,17 @@ def processCachedSongs():
 			idx = f.find("-_-")
 			if idx > 0:
 				songID = f[:idx]
-				if str(songID) not in HISTORYREAD.read():
-					copyfile(fromPath+f, toPath+f)
-					songDict[str(songID)] = toPath + f
+				with open(toPath + ".HISTORY") as fl:
+					if str(songID) not in fl.read():
+						copyfile(fromPath+f, toPath+f)
+						songDict[str(songID)] = toPath + f
+					
 	for f in dirs:
 		if f.endswith(".info"):
 			with open(fromPath+f) as jsonData:
 				tempData = json.load(jsonData)
 				songID = tempData["songId"]
-				if str(songID) in songDict and str(songID) not in HISTORYREAD.read():
+				if str(songID) in songDict:
 					songJSON = requestNeteaseJSON(songID)
 					if songJSON:
 						HISTORY.write(str(songID) + "\n")
@@ -57,6 +59,7 @@ def processCachedSongs():
 						os.rename(songDict[str(songID)], toPath + newSongName)
 						counter += 1
 						print(newSongName+" has been saved to NeteaseCacheMusic folder on your Desktop")
+	HISTORY.close()
 	return counter
 
 def main():
