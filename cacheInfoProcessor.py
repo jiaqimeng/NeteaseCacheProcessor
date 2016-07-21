@@ -58,7 +58,7 @@ def processCachedSongs():
 						newSongName = songName + "-" + songArtist + ".mp3"
 						os.rename(songDict[str(songID)], toPath + newSongName)
 						counter += 1
-						print(newSongName+" has been saved to NeteaseCacheMusic folder on your Desktop")
+						# print(newSongName+" has been saved to NeteaseCacheMusic folder on your Desktop")
 	HISTORY.close()
 	return counter
 
