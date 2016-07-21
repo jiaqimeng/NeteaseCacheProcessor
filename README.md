@@ -2,6 +2,11 @@
 
 Extracting songs from local netease music cache.
 
+Example:
+
+![alt tag](https://raw.githubusercontent.com/jiaqimeng/NeteaseCacheProcessor/master/Screen%20Shot%202016-07-21%20at%2016.39.43.png)
+
+![alt tag](https://github.com/jiaqimeng/NeteaseCacheProcessor/blob/master/Screen%20Shot%202016-07-21%20at%2016.45.52.png)
 Please make sure that you have a reliable internet connection and the Netease music app installed!
 
 Guide:
