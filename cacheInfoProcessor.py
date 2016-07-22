@@ -4,12 +4,13 @@ __author__ =  "Richard Meng @ UC Berkeley"
 
 import json, urllib
 import os, sys
+import platform
 from shutil import copyfile
 import urllib2
 
 # UTILITIES
 def requestNeteaseJSON(songID):
-	url = "http://music.163.com/api/song/detail/?id="+str(songID)+"&ids=%5B"+str(songID)+"%5D&csrf_token="
+	url = "http://music.163.com/api/song/detail/?id="+songID+"&ids=%5B"+songID+"%5D&csrf_token="
 	songJSON = json.load(urllib.urlopen(url))
 	return songJSON
 
@@ -26,7 +27,6 @@ if platform.system() == 'Darwin':
 if platform.system() == 'Windows':
 	fromPath = os.path.expanduser("~\\AppData\\Local\\Netease\\CloudMusic\\Cache\\Cache\\")
 	toPath = os.path.expanduser("~\\Desktop\\NeteaseCacheMusic\\")
-
 dirs = os.listdir(fromPath)
 songDict = {}
 
@@ -44,25 +44,29 @@ def processCachedSongs():
 			idx = f.find("-_-")
 			if idx > 0:
 				songID = f[:idx]
+				bitRate = f[idx+4:idx+7]
 				with open(toPath + ".HISTORY") as fl:
 					if str(songID) not in fl.read():
 						copyfile(fromPath+f, toPath+f)
-						songDict[str(songID)] = toPath + f
-					
+						songDict[str(songID)+"-"+str(bitRate)] = toPath + f
+
 	for f in dirs:
 		if f.endswith(".info"):
 			with open(fromPath+f) as jsonData:
 				tempData = json.load(jsonData)
-				songID = tempData["songId"]
-				if str(songID) in songDict:
+				songID = str(tempData["songId"])
+				songBitRate = str(tempData["bitrate"])
+				songDictKey = songID + "-" + songBitRate
+				if songDictKey in songDict:
 					songJSON = requestNeteaseJSON(songID)
 					if songJSON:
-						HISTORY.write(str(songID) + "\n")
+						HISTORY.write(songID + "\n")
 						songName = songJSON["songs"][0]["name"]
 						songArtist = songJSON["songs"][0]["album"]["artists"][0]["name"]
 						newSongName = songName + "-" + songArtist + ".mp3"
-						os.rename(songDict[str(songID)], toPath + newSongName)
-						counter += 1
+						if os.path.exists(songDict[songDictKey]):
+							os.rename(songDict[songDictKey], toPath + newSongName)
+							counter += 1
 						# print(newSongName+" has been saved to NeteaseCacheMusic folder on your Desktop")
 	HISTORY.close()
 	return counter
