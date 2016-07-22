@@ -21,3 +21,6 @@ Tip:
   1. Please make sure that the cached songs are "fully cached" (a complete song). If you find any song that breaks suddenly when it's playing, please go back to netease music app and play that specific music until the caching progress bar reaches 100%. Then go to the NeteaseCacheMusic folder, DELETE that song and repeat Guide 2.
   
 One more thing, do not delete the hidden file in that folder. It simply remembers the songs that have been processed before and avoid re-processing these songs next time.
+
+# Acknowledgement
+Thanks Netease Music!
