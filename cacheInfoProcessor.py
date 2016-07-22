@@ -20,8 +20,13 @@ def check_connectivity():
     except urllib2.URLError as err: pass
     return False
 
-fromPath = os.path.expanduser("~/Library/Containers/com.netease.163music/Data/Caches/online_play_cache/")
-toPath = os.path.expanduser("~/Desktop/NeteaseCacheMusic/")
+if platform.system() == 'Darwin':
+	fromPath = os.path.expanduser("~/Library/Containers/com.netease.163music/Data/Caches/online_play_cache/")
+	toPath = os.path.expanduser("~/Desktop/NeteaseCacheMusic/")
+if platform.system() == 'Windows':
+	fromPath = os.path.expanduser("~\\AppData\\Local\\Netease\\CloudMusic\\Cache\\Cache\\")
+	toPath = os.path.expanduser("~\\Desktop\\NeteaseCacheMusic\\")
+
 dirs = os.listdir(fromPath)
 songDict = {}
 
@@ -35,7 +40,7 @@ HISTORYREAD = open(toPath + ".HISTORY")
 def processCachedSongs():
 	counter = 0
 	for f in dirs:
-		if f.endswith(".uc!"):
+		if f.endswith(".uc!") or f.endswith(".uc"):
 			idx = f.find("-_-")
 			if idx > 0:
 				songID = f[:idx]
