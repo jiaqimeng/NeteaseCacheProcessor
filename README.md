@@ -10,7 +10,7 @@ Example:
 Please make sure that you have a reliable internet connection and the Netease music app installed!
 
 Guide:
-  1. Download the executable file
+  1. Download the executable file (the one without any suffix)
   2. Double click the downloaded file
   3. If everything goes fine, there will be a window popped up printing "Processing songs"
   4. Wait(this depends on how many songs need to be processed)
